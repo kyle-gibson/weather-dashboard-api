@@ -70,22 +70,22 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"     
           }).then(function(response) {             
-              console.log(response)
-              let uvDisplay = "badge badge-secondary";
-              if(uvValue < 3){
-                uvDisplay = "badge badge-success";
-              } else if (uvValue >= 3 && uvValue < 7){
-                uvDisplay = "badge badge-warning";
-              } else {
-                uvDisplay = "badge badge-danger";
-              };
+              console.log(response)            
+                let uvValue = response.value;
+                let uvDisplay = "badge badge-secondary";
+                if(uvValue < 3){
+                    uvDisplay = "badge badge-success";
+                    } else if (uvValue >= 3 && uvValue < 7){
+                    uvDisplay = "badge badge-warning";
+                    } else {
+                    uvDisplay = "badge badge-danger";
+                };
+                
               
-              
-              document.getElementsByClassName("card-text-uv")[0].textContent+= response.value;
-              $("#card-text-uv").addClass("card-text-uv badge badge-warning");
-        
-        
-            
+              let uvp = document.getElementsByClassName("card-text-uv")[0]
+              uvp.textContent+= response.value;
+              uvp.setAttribute("class","card-text-uv " + uvDisplay);     
+
         });
 
 };
