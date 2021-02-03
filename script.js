@@ -47,10 +47,9 @@ $(document).ready(function() {
             //https://openweathermap.org/img/w/01n.png
 
         let cardContainer = $("<div>").addClass("card")
-
+        
         lat = response.coord.lat;
-        lon = response.coord.lon;
-        console.log(lat, lon);
+        lon = response.coord.lon;        
 
         cityName.append(iconImage);
         cardBody.append(cityName, temperature, humidity, windSpeed, uvIndex);
@@ -59,6 +58,7 @@ $(document).ready(function() {
         $("#current-weather").append(cardContainer);
 
         getUV (); //calling function to get UV information
+        getFiveDay (); //calling function to get 5 day forecast
 
     });
 };
@@ -89,6 +89,34 @@ $(document).ready(function() {
         });
 
 };
+
+function getFiveDay(){
+  var apiKey = "&appid=28a251366afe42620dacd55b2d9f72b3";
+  let queryURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=current,minutely,hourly,alerts&cnt=6"+ apiKey + "&units=imperial";
+  $.ajax({
+    url: queryURL,
+    method: "GET"
+}).then(function(response) {
+  console.log(response);
+  forecast=$(".card-group");
+  forecast.html("");
+  for(let i = 1; i < 6; i++){
+    let histDate = moment.unix(response.daily[i].dt).format("MM/DD/YYYY");
+    forecast.append(`<div class="card text-white bg-primary mr-2" style="max-width: 18rem;">
+    <div class="card-body">
+      <h5 class="card-title">${histDate}</h5>
+      <img src="https://openweathermap.org/img/w/${response.daily[i].weather[0].icon}.png">
+      <p class="card-text">Temp: ${response.daily[i].temp.day}°F</p>
+      <p class="card-text">Humidity: ${response.daily[i].humidity}</p>
+    </div>
+  </div>`)
+  }
+
+
+  $("#forecast-weather").append(forecastContainer);
+})
+}
+
 
 
 function storage(){
