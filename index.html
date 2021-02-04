@@ -9,12 +9,21 @@
     <title>Weather Dashboard API</title>
 </head>
 <body>
+
+    <div class="d-flex" id="wrapper">
+        <div class="bg-light border-right" id="sidebar-wrapper">
+            <div class="sidebar-heading">Weather Dashboard</div>
+            <div class="list-group list-group-flush">
+            </div>
+        </div>
+
     <div class="container-fluid">
         <div class="row">
             <h1 class="mt-2">Search: </h1>
             <div class="form-inline">
                 <input type="text" class="form-control" id="search-input">
                 <button class="btn btn-primary" id="search-btn"><i class="fa fa-search"></i> </button>
+            </div>
             </div>
             <div class="col-lg-9">
                 <div class="mt-2" id="current-weather"></div>
@@ -23,7 +32,7 @@
                     <h2 class="mt-4">5-Day Forecast:</h2>
                     <div class="card-group">
                     </div>
-                </div>          
+                </div>       
             </div>
         </div>
     </div>

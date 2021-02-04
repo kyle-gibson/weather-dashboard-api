@@ -4,19 +4,6 @@ let lon = "";
 let navDiv = $(".list-group-flush");
 let city = "San Diego, California";
 
-// if(localStorage.getItem("weather") === null){ 
-//     city = "San Diego, California";
-//     populate();
-//   } else{    
-//     saveCity = JSON.parse(localStorage.getItem("weather"));
-//     city = saveCity[saveCity.length - 1];
-//     saveCity.forEach(e => {    
-//       let name = e.split(",")
-//       navDiv.append(`<a href="#" class="list-group-item list-group-item-action bg-light" data-city="${e}">${name[0]}</a>`);
-//     })  
-//     populate();
-//   }
-
 
 $(document).ready(function() {
     $("#search-btn").on("click", function(){
@@ -54,6 +41,17 @@ $(document).ready(function() {
         cityName.append(iconImage);
         cardBody.append(cityName, temperature, humidity, windSpeed, uvIndex);
         cardContainer.append(cardBody);
+
+        let historyLinks = document.querySelectorAll("a");
+        let history = false;
+        for(let i = 0; i < historyLinks.length; i++){
+            if(historyLinks[i].dataset.city === userInput){
+              history = true;            
+          }
+        }
+        if(!history){          
+          navDiv.append(`<a href="#" class="list-group-item list-group-item-action bg-light" data-city="${userInput}">${response.name}</a>`);
+        }
         
         $("#current-weather").append(cardContainer);
 
@@ -113,20 +111,17 @@ function getFiveDay(){
   }
 
 
-  $("#forecast-weather").append(forecastContainer);
+
 })
 }
 
+$(".list-group-flush").on("click", "a", function(event){
+  event.preventDefault();      
+  city_name = $(this).data("city");
+  searchCurrent(city_name);
+});
 
 
-function storage(){
-    if(localStorage.getItem("weather") === null){
-      localStorage.setItem("weather", JSON.stringify([city]));
-    } else{
-      let saveCity = JSON.parse(localStorage.getItem("weather"));
-      saveCity[saveCity.length] = city;
-      localStorage.setItem("weather", JSON.stringify(saveCity));
-    }
-  }
+
 
 });
