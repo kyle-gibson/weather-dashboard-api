@@ -21,7 +21,6 @@ $(document).ready(function() {
       method: "GET"     
     }).then(function(response) {
         $("#current-weather").empty()
-        console.log(response)
         //cardbody bootstrap dynamically created
         let cityName = $("<h5>").addClass("card-title").text(response.name);
         let windSpeed = $("<p>").addClass("card-text").text("Windspeed: " + response.wind.speed + " MPH");
@@ -68,7 +67,6 @@ $(document).ready(function() {
             url: queryURL,
             method: "GET"     
           }).then(function(response) {             
-              console.log(response)            
                 let uvValue = response.value;
                 let uvDisplay = "badge badge-secondary";
                 if(uvValue < 3){
@@ -95,7 +93,6 @@ function getFiveDay(){
     url: queryURL,
     method: "GET"
 }).then(function(response) {
-  console.log(response);
   forecast=$(".card-group");
   forecast.html("");
   for(let i = 1; i < 6; i++){
